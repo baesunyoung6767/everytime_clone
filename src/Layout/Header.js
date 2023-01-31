@@ -12,11 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router';
+import {NavLink} from "react-router-dom";
 
 const pages = ['자유게시판', '홍보게시판', '정보장터'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
+    let navigate = useNavigate();
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,7 +45,7 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography>
-           <img src="main_img/logo.png" style={{margin:"10px", width:"150px", height:"100%"}}/>
+           <NavLink to="/"><img src="main_img/logo.png" style={{margin:"10px", width:"150px", height:"100%"}}/></NavLink>
           </Typography>
 
           <Box sx={{ marginTop:"15px", flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -83,7 +87,7 @@ function Header() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>{navigate(`/${page}`);}}
                 sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page}

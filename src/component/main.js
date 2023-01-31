@@ -15,7 +15,14 @@ function main() {
                 <div id="stars"></div>
                 <div id="stars2"></div>
                 <div id="stars3"></div>
+                <div className="main2_content">
+                    <div className = "main2_content_title"> 자유게시판 </div>
+                    <div className = "main2_content_table"></div>
+                    <div className = "main2_content_title"> 홍보게시판 </div>
+                    <div className = "main2_content_table"></div>
+                </div>
             </div>
+
         </>
     );
 }
