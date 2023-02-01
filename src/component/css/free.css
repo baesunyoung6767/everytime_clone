@@ -1,6 +1,11 @@
 .free_main {
     background-color: #FFDC8A;
-    height: 800px;
+    height: 100%;
     position: relative;
     z-index: 3;
+}
+
+.free_main_content {
+    padding: 50px;
+    background-color: #FFDC8A;
 }

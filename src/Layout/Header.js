@@ -40,6 +40,9 @@ function Header() {
         setAnchorElUser(null);
     };
 
+    if(window.location.pathname === '/signIn' || window.location.pathname === '/signUp') 
+      return null; //로그인 또는 회원가입 화면에서는 헤더가 보이지 않도록 함
+      
     return(
     <AppBar position="static" style={{backgroundColor:"#FFDC8A", position:"relative", zIndex:"3"}}>
       <Container maxWidth="xl">
@@ -96,8 +99,8 @@ function Header() {
           </Box>
 
         <Box sx={{ flexGrow: 0 }}>
-            <Button style={{marginRight:"10px", color:"black"}}>SIGN IN</Button>
-            <Button variant="contained" style={{backgroundColor:"black", color:"#FFDC8A"}}>SIGN UP</Button>
+            <Button style={{marginRight:"10px", color:"black"}} onClick={()=>{navigate('/signIn');}}>SIGN IN</Button>
+            <Button variant="contained" style={{backgroundColor:"black", color:"#FFDC8A"}} onClick={()=>{navigate('/signUp');}}>SIGN UP</Button>
         </Box>
 
           {/* 로그인하면 사용자 정보 확인이 가능하도록 변경 */}
