@@ -1,4 +1,6 @@
 .free_main {
     background-color: #FFDC8A;
     height: 800px;
+    position: relative;
+    z-index: 3;
 }

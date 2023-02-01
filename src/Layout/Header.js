@@ -41,7 +41,7 @@ function Header() {
     };
 
     return(
-    <AppBar position="static" style={{backgroundColor:"#FFDC8A"}}>
+    <AppBar position="static" style={{backgroundColor:"#FFDC8A", position:"relative", zIndex:"3"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography>
