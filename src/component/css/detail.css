@@ -1,0 +1,23 @@
+.detail_main {
+    padding-top: 75px;
+    background-color: #FFDC8A;
+    height: 1200px;
+    position: relative;
+    z-index: 3;
+}
+
+.detail_title {
+    font-size: 25px;
+    width: 1000px;
+}
+
+/* 게시글 또는 댓글 길이에 따라 높이 조정해야 하는데 이건 어떻게..? */
+.detail_content {
+    width: 1000px;
+    height: 500px;
+}
+
+.detail_comment {
+    width: 1000px;
+    height: 300px;
+}
