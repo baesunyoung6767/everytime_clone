@@ -2,9 +2,11 @@ import './css/free.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'id', headerName: 'No.', width: 90 },
     {
       field: 'firstName', //title
       headerName: '제목',
@@ -69,13 +71,26 @@ const columns = [
     { id: 11, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
   ];
 
-function free() {
+function useFree() {
+
+  const navigate = useNavigate();
+
+  const useHandleEvent = (event) => {
+    console.log(event.id);
+    navigate(`` + event.id);
+  }
+
+
     return(
         <>
         <div className = "free_main">
+            <div style={{textAlign:'Right', marginRight:'40px', paddingTop:'25px'}}>
+            <Button variant="text" style={{margin:'10px', color:'black', textDecoration:'underline'}}>작성하기</Button>
+            </div>
             <div className='free_main_content'>
                 <Box sx={{ height: 630, width: '100%'}}>
                     <DataGrid
+                        onRowClick={useHandleEvent}
                         rows={rows}
                         columns={columns}
                         pageSize={10}
@@ -93,4 +108,4 @@ function free() {
     );
 }
 
-export default free;
+export default useFree;

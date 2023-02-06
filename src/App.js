@@ -6,7 +6,7 @@ import SignIn from './component/signIn'
 import SignUp from './component/signUp'
 import Detail from './component/detail'
 
-import { BrowserRouter, BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
@@ -15,8 +15,10 @@ function App() {
         <Header></Header>
         <Routes>
           <Route path='/' element={<Main/>}/>
-          <Route path='/자유게시판' element={<Free/>}/>
-          <Route path='/자유게시판/:id' element={<Detail/>}/>
+
+          <Route path='/general_forum' element={<Free/>}/>
+          <Route path='/general_forum/:id' element={<Detail/>}/>
+          
           <Route path='/signIn' element={<SignIn/>}/>
           <Route path='/signUp' element={<SignUp/>}/>
         </Routes>

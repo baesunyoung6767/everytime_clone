@@ -90,7 +90,11 @@ function Header() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{navigate(`/${page}`);}}
+                onClick={()=>{
+                  let move = '';
+                  if(page == '자유게시판') move = 'general_forum'; 
+                  navigate(`/${move}`);
+                }}
                 sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page}

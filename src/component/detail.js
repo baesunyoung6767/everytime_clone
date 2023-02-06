@@ -3,12 +3,16 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 import './css/detail.css';
 
 const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: 'transparent',
         padding: theme.spacing(3),
         textAlign: 'left',
+        // boxShadow: 'none',
   }));
 
 function detail() {
@@ -33,9 +37,11 @@ function detail() {
                     </Grid>
                     <Grid item>
                         <Item>
+                            공감<br/>
+                            댓글<br/>
                             <div className='detail_comment'>
-                                공감<br/>
-                                댓글
+                                <TextField style={{width : '800px'}} id="comment"/>
+                                <Button variant="contained" style={{margin:'10px', backgroundColor:'#d3d3d3', color:'black', border:'0.5px solid'}}>등록</Button>
                             </div>
                         </Item>
                     </Grid>
