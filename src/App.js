@@ -18,7 +18,11 @@ function App() {
 
           <Route path='/general_forum' element={<Free/>}/>
           <Route path='/general_forum/:id' element={<Detail/>}/>
-          
+
+          {/* <Route path='/general_forum' element={<Free/>}>
+            <Route path=':id' element={<Detail/>}/>
+          </Route> */}
+
           <Route path='/signIn' element={<SignIn/>}/>
           <Route path='/signUp' element={<SignUp/>}/>
         </Routes>

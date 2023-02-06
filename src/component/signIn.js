@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +12,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import GoogleLogin from 'react-google-login';
+import { GoogleOAuthProvider } from '@react-oauth/google'
+// import { GoogleLogin } from '@react-oauth/google'
+import styled from 'styled-components';
+import {FcGoogle} from "react-icons/fc"
 
 const theme = createTheme();
+const clientId = "13841580112-mb1fbkcfmnimssovjsvgnkfsvea0dmu8.apps.googleusercontent.com";
 
-export default function signIn() { //서버에 전송해서 로그인 가능하도록 코드 수정 필요
+export default function useSignIn() { //서버에 전송해서 로그인 가능하도록 코드 수정 필요
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -24,6 +31,18 @@ export default function signIn() { //서버에 전송해서 로그인 가능하�
       password: data.get('password'),
     });
   };
+
+  const onSuccess = async(response) => {
+    const {googleId, profileObj : {email, name}} = response;
+    console.log(response);
+    // await onGoogleLogin {
+    //   // 구글 로그인 성공시 서버에 전달할 데이터
+    // }
+  }
+
+  const onFailure = (error) => {
+    console.log(error);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,6 +106,24 @@ export default function signIn() { //서버에 전송해서 로그인 가능하�
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
+              <Grid item>
+                <GoogleOAuthProvider clientId={clientId}>
+                  <GoogleLogin
+                    clientId={clientId}
+                    responseType={"id_token"}
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    render={(renderProps) => (
+                      <GoogleButton onClick={renderProps.onClick}>
+                        <GoogleWrapper>
+                          <FcGoogle style={{width:"25px", height:"25px"}}/>
+                          <GoogleText>구글로 시작하기</GoogleText>
+                        </GoogleWrapper>
+                      </GoogleButton>
+                      )}
+                  ></GoogleLogin>
+                </GoogleOAuthProvider>
+              </Grid>
             </Grid>
           </Box>
         </Box>
@@ -94,3 +131,34 @@ export default function signIn() { //서버에 전송해서 로그인 가능하�
     </ThemeProvider>
   );
 }
+
+const GoogleButton = styled.button`
+  width: 400px;
+  height: 47px;
+  padding: 9px 84px 9px 21px;
+  background: none;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d3d3d3;
+  margin-top: 20px;
+`;
+
+const GoogleWrapper = styled.div`
+  width: 238px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+`;
+
+
+const GoogleText = styled.span`
+  font-weight: 400px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: black;
+  font-size: 15px;
+  font-weight: 500;
+`;
