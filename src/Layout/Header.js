@@ -23,7 +23,7 @@ function Header() {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -39,6 +39,13 @@ function Header() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    function signOutFun() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('loggedIn');
+      alert('로그아웃되었습니다!');
+      navigate("/");
+    }
 
     if(window.location.pathname === '/signIn' || window.location.pathname === '/signUp') 
       return null; //로그인 또는 회원가입 화면에서는 헤더가 보이지 않도록 함
@@ -103,8 +110,18 @@ function Header() {
           </Box>
 
         <Box sx={{ flexGrow: 0 }}>
+          {
+            localStorage.getItem("loggedIn") != null ? 
+            <>
+            <Button style={{marginRight:"10px", color:"black"}} onClick={()=>{navigate('/info');}}>MY INFO</Button>
+            <Button variant="contained" style={{backgroundColor:"black", color:"#FFDC8A"}} onClick={()=>signOutFun()}>SIGN OUT</Button>
+            </>
+            :
+            <>
             <Button style={{marginRight:"10px", color:"black"}} onClick={()=>{navigate('/signIn');}}>SIGN IN</Button>
             <Button variant="contained" style={{backgroundColor:"black", color:"#FFDC8A"}} onClick={()=>{navigate('/signUp');}}>SIGN UP</Button>
+            </>
+          }
         </Box>
 
           {/* 로그인하면 사용자 정보 확인이 가능하도록 변경 */}

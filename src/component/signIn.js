@@ -17,19 +17,32 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 // import { GoogleLogin } from '@react-oauth/google'
 import styled from 'styled-components';
 import {FcGoogle} from "react-icons/fc"
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme();
 const clientId = "13841580112-mb1fbkcfmnimssovjsvgnkfsvea0dmu8.apps.googleusercontent.com";
 
 export default function useSignIn() { //서버에 전송해서 로그인 가능하도록 코드 수정 필요
-  
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+    axios.post('http://localhost:8080/user/login', {
+      userId: data.get('Id'),
       password: data.get('password'),
-    });
+    }).then((res) => {
+        if (res.status == 201) {
+            localStorage.setItem('token',res.data.result.token);
+            localStorage.setItem('loggedIn',"true");
+            navigate("/");
+        } else { 
+            alert('로그인 정보를 다시 입력해주세요!');
+        }
+    }).catch((err) => {
+        console.log("로그인 실패 : ", err);
+    })
   };
 
   const onSuccess = async(response) => {
@@ -67,10 +80,10 @@ export default function useSignIn() { //서버에 전송해서 로그인 가능�
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="Id"
+              label="Your Id"
+              name="Id"
+              autoComplete="Your Id"
               autoFocus
             />
             <TextField

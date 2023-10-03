@@ -12,17 +12,32 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme();
 
-export default function signUp() {
+export default function SignUp() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    axios.post('http://localhost:8080/user/register', {
+      userId: data.get('Id'),
+      userPwd: data.get('password'),
+      userUniv: data.get('university'),
+      userEmail: data.get('email'),
+    }).then((res) => {
+        if (res.status == 201) {
+            alert("회원 가입 성공");
+            navigate("/signIn");
+        } else { 
+            alert('가입 실패!!');
+        }
+    }).catch((err) => {
+        console.log("회원가입 실패 : ", err);
+    })
   };
 
   return (
@@ -48,11 +63,11 @@ export default function signUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="이름"
+                  name="Id"
                   required
                   fullWidth
-                  id="Name"
-                  label="Name"
+                  id="Id"
+                  label="Id"
                   autoFocus
                 />
               </Grid>
@@ -60,7 +75,7 @@ export default function signUp() {
                 <TextField
                   required
                   fullWidth
-                  id="소속 학교"
+                  id="university"
                   label="University"
                   name="university"
                 />
