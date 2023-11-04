@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+import { AiOutlineShareAlt } from "react-icons/ai";
 
 import './css/detail.css';
 
@@ -52,7 +55,10 @@ function useDetail() {
                         <Item>
                             {/* db에서 가져오는 값은 변수에 담아서 추후 변경하면 됨 */}
                             <div className='detail_title'>{freeTitle}</div> 
-                            <div>{freeUser} {freeDate} 조회수 0 댓글 0 공감 0</div>
+                            <div className='detail_info'>
+                                <div className='detail_user'>{freeUser}</div>
+                                <div className='detail_date'>{freeDate} </div>
+                            </div>
                         </Item>
                     </Grid>
                     <Grid item>
@@ -64,8 +70,10 @@ function useDetail() {
                     </Grid>
                     <Grid item>
                         <Item>
-                            공감<br/>
-                            댓글<br/>
+                            <div style={{ marginLeft: '57px', marginBottom: '15px'}}>
+                                <FiHeart size="20" color="#D11808" style={{ marginRight: '10px' }}/>
+                                <AiOutlineShareAlt size="23"/>
+                            </div>
                             <div className='detail_comment'>
                                 <TextField style={{width : '800px'}} id="comment"/>
                                 <Button variant="contained" style={{margin:'10px', backgroundColor:'#d3d3d3', color:'black', border:'0.5px solid'}}>등록</Button>
