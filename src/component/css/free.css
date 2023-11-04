@@ -6,6 +6,8 @@
 }
 
 .free_main_content {
-    padding: 0px 50px 50px 50px;
-    background-color: #FFDC8A;
+    padding: 0px 100px 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

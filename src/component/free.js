@@ -1,41 +1,36 @@
 import './css/free.css';
 import * as React from 'react';
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const columns = [
     { field: 'id', headerName: 'No.', width: 90 },
     {
-      field: 'firstName', //title
+      field: 'freeTitle', //title
       headerName: '제목',
-      width: 200,
+      width: 350,
       editable: true,
     },
     {
-      field: 'lastName', //content
-      headerName: '내용',
-      width: 450,
-      editable: true,
-    },
-    {
-      field: 'age', //name
+      field: 'userId', //name
       headerName: '작성자',
       width: 150,
       editable: true,
     },
     {
-      field: 'fullName', //date
+      field: 'freeDate', //date
       headerName: '작성일',
     //   description: 'This column has a value getter and is not sortable.',
       sortable: false,
       width: 180,
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      editable: true,
     },
     {
-        field: 'coment', //name
+        field: 'comment', //name
         headerName: '댓글',
         typeof: Number,
         width: 90,
@@ -48,37 +43,52 @@ const columns = [
         width: 90,
         editable: true,
     },
-    {
-        field: 'look', //name
-        headerName: '조회수',
-        typeof: Number,
-        width: 90,
-        editable: true,
-    }
+    // {
+    //     field: 'look', //name
+    //     headerName: '조회수',
+    //     typeof: Number,
+    //     width: 90,
+    //     editable: true,
+    // }
   ];
   
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 11, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-
 function useFree() {
 
   const navigate = useNavigate();
 
+  // 상세페이지 이동
   const useHandleEvent = (event) => {
-    console.log(event.id);
     navigate(`` + event.id);
   }
+
+  const [freePostData, setFreePostData] = useState([]);
+
+  function setFreePostFun(props) {
+    setFreePostData(props);
+  }
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/free-post/0')
+        .then((res) => {
+            const data = res.data.content;
+            const extractedData = data.map(item => ({
+              id: item.freeId,
+              userId: item.user.userId,
+              freeDate: item.freeDate.split("T")[0],
+              freeTitle: item.freeTitle,
+              comment: 0,
+              like: 0,
+            }));
+            setFreePostFun(extractedData);
+        })
+        .catch((err)=>{
+            
+            console.log(err)
+        })
+    return () => {
+        //console.log('article클리어 하는 코드')
+    }
+  }, [])
 
 
     return(
@@ -88,10 +98,10 @@ function useFree() {
             <Button variant="text" style={{margin:'10px', color:'black', textDecoration:'underline'}}>작성하기</Button>
             </div>
             <div className='free_main_content'>
-                <Box sx={{ height: 630, width: '100%'}}>
+                <Box sx={{ height: 630, width: 1000}}>
                     <DataGrid
                         onRowClick={useHandleEvent}
-                        rows={rows}
+                        rows={freePostData}
                         columns={columns}
                         pageSize={10}
                         rowsPerPageOptions={[10]}
