@@ -99,7 +99,7 @@ function Header() {
                 key={page}
                 onClick={()=>{
                   let move = '';
-                  if(page == '자유게시판') move = 'general_forum'; 
+                  if(page == '자유게시판') move = 'general-forum'; 
                   navigate(`/${move}`);
                 }}
                 sx={{ my: 2, color: 'black', display: 'block' }}

@@ -5,6 +5,7 @@ import Free from './component/free'
 import SignIn from './component/signIn'
 import SignUp from './component/signUp'
 import Detail from './component/detail'
+import CreateFree from './component/createFree'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -16,8 +17,10 @@ function App() {
         <Routes>
           <Route path='/' element={<Main/>}/>
 
-          <Route path='/general_forum' element={<Free/>}/>
-          <Route path='/general_forum/:id' element={<Detail/>}/>
+          <Route path='/general-forum' element={<Free/>}/>
+          <Route path='/general-forum/:id' element={<Detail/>}/>
+
+          <Route path='/create-post' element={<CreateFree/>}/>
 
           {/* <Route path='/general_forum' element={<Free/>}>
             <Route path=':id' element={<Detail/>}/>

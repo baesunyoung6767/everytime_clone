@@ -67,6 +67,10 @@ function useFree() {
     setFreePostData(props);
   }
 
+  const createFreePage = () => {
+    navigate('/create-post');
+  }
+
   useEffect(() => {
     axios.get('http://localhost:8080/free-post/0')
         .then((res) => {
@@ -95,7 +99,7 @@ function useFree() {
         <>
         <div className = "free_main">
             <div style={{textAlign:'Right', marginRight:'40px', paddingTop:'25px'}}>
-            <Button variant="text" style={{margin:'10px', color:'black', textDecoration:'underline'}}>작성하기</Button>
+            <Button variant="text" style={{margin:'10px', color:'black', textDecoration:'underline'}} onClick={createFreePage}>작성하기</Button>
             </div>
             <div className='free_main_content'>
                 <Box sx={{ height: 630, width: 1000}}>

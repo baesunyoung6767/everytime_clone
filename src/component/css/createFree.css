@@ -1,0 +1,10 @@
+.create_main {
+    background-color: #FFDC8A;
+    height: 1000px;
+    position: relative;
+    z-index: 3;
+    padding: 0px 100px 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
