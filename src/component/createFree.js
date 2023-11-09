@@ -1,20 +1,43 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom';
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
-import { AiOutlineShareAlt } from "react-icons/ai";
+import { useNavigate } from 'react-router';
 
 import './css/createFree.css';
 
 function useCreateFree() {
+
+    const [token, setToken] = useState('');
+    let navigate = useNavigate();
+
+    const getToken = async () => {
+        try {
+          const storedToken = await localStorage.getItem('token') || '';
+          console.log('토큰 확인');
+          console.log(storedToken);
+          setToken(storedToken);
+          if (token == null) { console.log('Token not found');}
+        } catch (error) {
+          console.error('Error retrieving token:', error);
+        }
+    };
+    
+    useEffect(() => {
+        getToken();
+    }, [])
+
+    const [board, setBoard] = useState({
+        freeTitle: '',
+        freeContent: '',
+      });
+
+    const { freeTitle, freeContent } = board; 
     
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -26,11 +49,42 @@ function useCreateFree() {
         left: 0,
         whiteSpace: 'nowrap',
         width: 1,
-      });
+    });
+
+    const onChange = (event) => {
+        const { value, name } = event.target;
+        setBoard({
+          ...board,
+          [name]: value,
+        });
+    }
+
+    function uploadPost() {
+        axios.post('http://localhost:8080/free-post/', {
+            freeTitle: board.freeTitle,
+            freeContent: board.freeContent,
+        },{
+            headers: {
+              'Authorization' : `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            if (res.status == 201) {
+                alert('게시글 등록 성공!');
+                navigate("/general-forum");
+            } else { 
+                alert('게시글 등록 실패!');
+            }
+        }).catch((err) => {
+            console.log("API 요청 오류 : ", err);
+        })
+    }
+  
    
     return(
         <div className='create_main'>
             <Grid container direction="column" justifyContent="center" alignItems="center">
+            {/* <div className='create_title'>게시글 작성</div> */}
                     <Grid item>
                     <Box
                         sx={{
@@ -39,7 +93,7 @@ function useCreateFree() {
                             paddingBottom: '15px'
                         }}
                         >
-                        <TextField fullWidth label="제목" id="title" style={{backgroundColor : 'transparent'}} />
+                        <TextField fullWidth label="제목" id="title" style={{backgroundColor : 'transparent'}} value={freeTitle} name="freeTitle" onChange={onChange}/>
                     </Box>
                     </Grid>
                     <Grid item>
@@ -48,9 +102,11 @@ function useCreateFree() {
                             paddingBottom: '15px'
                         }}>
                         <textarea
-                        name="contents"
+                        name="freeContent"
                         cols="135"
                         rows="30"
+                        value={freeContent}
+                        onChange={onChange}
                         style={{backgroundColor : 'transparent', borderRadius: '4px'}}
                         ></textarea>
                     </Box>
@@ -64,7 +120,10 @@ function useCreateFree() {
                                 Upload file
                                 <VisuallyHiddenInput type="file" />
                             </Button>
-                            <Button sx={{ backgroundColor:"#3C3A39", color:"white", marginLeft:"10px"}}  variant="contained">등록</Button>
+                            <Button 
+                            sx={{ backgroundColor:'#d3d3d3', color:'black',  marginLeft:"10px"}}  variant="contained"
+                            onClick={()=>uploadPost()}
+                            >등록</Button>
                         </Box>
                     </Grid>
                 </Grid>

@@ -21,7 +21,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme();
-const clientId = "13841580112-mb1fbkcfmnimssovjsvgnkfsvea0dmu8.apps.googleusercontent.com";
+const clientId = "";
 
 export default function useSignIn() { //서버에 전송해서 로그인 가능하도록 코드 수정 필요
   const navigate = useNavigate();
