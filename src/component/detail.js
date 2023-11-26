@@ -27,16 +27,23 @@ function useDetail() {
     const [freeContent, setFreeContent] = useState();
     const [freeDate, setFreeDate] = useState();
     const [freeUser, setFreeUser] = useState();
+    const [imageUrl, setImageUrl] = useState("");
 
     useEffect(() => {
-        axios.get('http://localhost:8080/free-post/detail/'+id)
-            .then((res) => {
-                const data = res.data;
+        axios.all([axios.get('http://localhost:8080/free-post/detail/'+id), axios.get('http://localhost:8080/free-post/image/1', {responseType: "blob"})])
+            .then(axios.spread((res1, res2) => {
+                const data = res1.data;
+
+                const imageFile = res2.data;
+                const url = window.URL.createObjectURL(imageFile);
+
                 setFreeTitle(data.freeTitle);
                 setFreeContent(data.freeContent);
                 setFreeDate(data.freeDate.split("T")[0]);
                 setFreeUser(data.user.userId);
+                setImageUrl(url);
             })
+            )
             .catch((err)=>{
                 
                 console.log(err)
@@ -64,7 +71,8 @@ function useDetail() {
                     <Grid item>
                         <Item>
                             <div className='detail_content'>
-                                {freeContent}
+                                <div><img className='detail_img' src={imageUrl} /></div>
+                                <div>{freeContent}</div>
                             </div>
                         </Item>
                     </Grid>

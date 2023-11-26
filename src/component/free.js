@@ -72,7 +72,7 @@ function useFree() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8080/free-post/0')
+    axios.get('http://localhost:8080/free-post/0') // 여기서 0은 페이지 (추후 변경 필요)
         .then((res) => {
             const data = res.data.content;
             const extractedData = data.map(item => ({

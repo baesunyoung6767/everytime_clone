@@ -15,6 +15,10 @@
 .detail_content {
     width: 1000px;
     height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 35px;
 }
 
 .detail_comment {
@@ -38,4 +42,10 @@
 .detail_date {
     float: left;
     width:10%;
+}
+
+.detail_img {
+    height: 300px;
+    width: 300px;
+    margin-bottom: 20px;
 }
